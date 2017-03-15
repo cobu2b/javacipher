@@ -22,6 +22,17 @@ public class SimpleServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html");
         response.getWriter().print("Hello World!");
+
+        String cipherSuite = (String) req.getAttribute("javax.servlet.request.cipher_suite");
+ 
+	if (cipherSuite != null) {
+    		X509Certificate certChain[] = (X509Certificate[]) req.getAttribute("javax.servlet.request.X509Certificate");
+    		if (certChain != null) {
+        		for (int i = 0; i < certChain.length; i++) {
+				response.getWriter().print("Client Certificate [" + i + "] = "+ certChain[i].toString());
+        		}
+    		}
+	}
     }
 
 }
